@@ -1,0 +1,19 @@
+{
+  "name": "tdd rattrapge",
+  "version": "1.0.0",
+  "description": "Simulation de dépôts de sédiments rattrapage TDD  ;)",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "start": "node src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "vitest": "^5.0.0"
+  }
+}
