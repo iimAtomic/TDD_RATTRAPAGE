@@ -23,3 +23,16 @@ it('remplit un segment horizontal', () => {
     [498, 6],
   ]);
 });
+
+it('accepte un segment dans le sens inverse', () => {
+  expect(fillSegment([498, 6], [498, 4])).toEqual([
+    [498, 4],
+    [498, 5],
+    [498, 6],
+  ]);
+});
+
+it('rejette un segment diagonal', () => {
+  expect(() => fillSegment([498, 4], [500, 6])).toThrow();
+});
+
