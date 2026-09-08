@@ -32,10 +32,30 @@ export function parseLine(line) {
   const cases = [points[0]];
 
   for (let i = 1; i < points.length; i++) {
-    const segment = fillSegment(points[i - 1], points[i]);
-    // ici j'ai pensé en vrai à retirer le premier point du segment pour éviter de dupliquer
+    let segment = fillSegment(points[i - 1], points[i]);
+
+    const [prevX, prevY] = points[i - 1];
+    const [firstX, firstY] = segment[0];
+    if (firstX !== prevX || firstY !== prevY) {
+      segment = segment.reverse();
+    }
+
     cases.push(...segment.slice(1));
   }
 
   return cases;
+}
+
+export function parseInput(content) {
+  const lines = content.split('\n').filter((line) => line.trim() !== '');
+  const roches = new Set();
+
+  for (const line of lines) {
+    const cases = parseLine(line);
+    for (const [x, y] of cases) {
+      roches.add(`${x},${y}`);
+    }
+  }
+
+  return roches;
 }
