@@ -60,3 +60,25 @@ describe('settleOne', () => {
     expect(settleOne(isOccupied, [500, 0], isOutOfBounds)).toBeNull();
   });
 });
+
+describe('enchaînement : immobilisation puis apparition du suivant', () => {
+  it('le second dépôt part bien de la source et est dévié par le premier, déjà immobilisé', () => {
+    // corniche large en y=3 sous la source : le premier dépôt s'immobilise en (500,2)
+    const rocks = new Set(['497,3', '498,3', '499,3', '500,3', '501,3', '502,3', '503,3']);
+    const isOutOfBounds = () => false;
+
+    const occupied = new Set(rocks);
+    const isOccupied = (x, y) => occupied.has(`${x},${y}`);
+
+    const premier = settleOne(isOccupied, [500, 0], isOutOfBounds);
+    expect(premier).toEqual([500, 2]);
+
+    // le premier dépôt devient une obstruction avant que le suivant n'apparaisse
+    occupied.add(`${premier[0]},${premier[1]}`);
+
+    // le second dépôt réapparaît à la source (500,0), pas là où le premier s'est arrêté
+    const second = settleOne(isOccupied, [500, 0], isOutOfBounds);
+    expect(second).toEqual([499, 2]);
+    expect(second).not.toEqual(premier);
+  });
+});

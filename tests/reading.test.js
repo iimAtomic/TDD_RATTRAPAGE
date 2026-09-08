@@ -13,7 +13,7 @@ describe('Lecture A - limite ouverte', () => {
 
   it('ne compte aucun dépôt si la source est immédiatement au-delà de la roche connue', () => {
     const roches = parseInput('500,0 -> 500,0');
-    // D'apres le doc de rattrapage toute la roche est sur la source elle-même : rien ne peut se poser en dessous
+    // D'apres le doc de l'exo toute la roche est sur la source elle-même : rien ne peut se poser en dessous
     expect(simulateOpenFloor(roches)).toBe(0);
   });
 });
