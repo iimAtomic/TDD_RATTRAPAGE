@@ -36,3 +36,12 @@ it('rejette un segment diagonal', () => {
   expect(() => fillSegment([498, 4], [500, 6])).toThrow();
 });
 
+it('traite plusieurs segments', () => {
+  expect(parseLine('498,4 -> 498,6 -> 496,6')).toEqual([
+    [498, 4],
+    [498, 5],
+    [498, 6],
+    [497, 6],
+    [496, 6],
+  ]);
+});
