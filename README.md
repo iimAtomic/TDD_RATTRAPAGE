@@ -24,19 +24,11 @@ npm start
 npm test
 ```
 
-> Sur certaines machines Windows, un test qui boucle sans jamais se terminer
-> ne produit **aucune sortie** avant expiration (même pas la bannière de
-> démarrage de Vitest) : la commande semble juste figée. Pendant le
-> développement, il est recommandé de lancer les tests sous un `timeout`
-> shell pour ne jamais rester bloqué en silence :
+> Sur Windows, en cas de test bloqué, lancer plutôt :
 >
 > ```bash
 > timeout 30 npx vitest run
 > ```
->
-> Si la commande s'arrête sans rien afficher au bout de 30 secondes (code de
-> sortie `124`), c'est le signe qu'un test contient une boucle infinie — pas
-> un problème d'installation.
 
 ## `input.txt` : rôle et lien avec les tests
 
