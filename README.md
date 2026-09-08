@@ -25,8 +25,36 @@ npm test
 ```
 
 > Sur certaines machines Windows, un test qui boucle sans jamais se terminer
-> ne produit aucune sortie avant expiration : on recommande de lancer
-> `npx vitest run` sous un `timeout` shell pendant le développement.
+> ne produit **aucune sortie** avant expiration (même pas la bannière de
+> démarrage de Vitest) : la commande semble juste figée. Pendant le
+> développement, il est recommandé de lancer les tests sous un `timeout`
+> shell pour ne jamais rester bloqué en silence :
+>
+> ```bash
+> timeout 30 npx vitest run
+> ```
+>
+> Si la commande s'arrête sans rien afficher au bout de 30 secondes (code de
+> sortie `124`), c'est le signe qu'un test contient une boucle infinie — pas
+> un problème d'installation.
+
+## `input.txt` : rôle et lien avec les tests
+
+`input.txt`, à la racine du projet, est **le vrai relevé** à traiter (115
+lignes) — c'est le livrable final : `npm start` le lit et affiche les deux
+indicateurs réels attendus par l'énoncé.
+
+**Aucun test n'utilise ce fichier réel.** Les tests (`parser.test.js`,
+`simulation.test.js`, `reading.test.js`) travaillent sur des chaînes de
+texte inline (l'extrait fourni par l'énoncé, ou de petits scénarios
+construits à la main) pour rester rapides et déterministes. Seul
+`tests/index.test.js` exerce le **même code** que `npm start`
+(`run()` dans `src/index.js` : lecture de fichier → parsing → calcul des
+deux lectures), mais pointé vers un fichier temporaire jetable contenant
+l'extrait de l'énoncé — jamais vers le vrai `input.txt` du dépôt. Le
+contenu réel de `input.txt` (et donc les valeurs 763 / 23921 obtenues avec)
+n'est donc vérifié par aucun test automatisé, seulement observable à l'œil
+via `npm start`.
 
 ## Organisation du code
 
@@ -78,8 +106,9 @@ Lecture B (sol supposé)    : <nombre>
   horizontaux/verticaux (dans les deux sens), rejet des diagonales, lignes
   multi-segments, et construction du `Set` de roches.
 - `tests/simulation.test.js` — les trois directions dans leur ordre de
-  priorité strict, le cas où les trois sont bloquées, et l'immobilisation
-  d'un dépôt (`settleOne`), y compris la sortie de la zone connue.
+  priorité strict, le cas où les trois sont bloquées, l'immobilisation
+  d'un dépôt (`settleOne`) y compris la sortie de la zone connue, et
+  l'enchaînement immobilisation → apparition du dépôt suivant à la source.
 - `tests/reading.test.js` — les deux lectures rejouées sur l'extrait fourni
   par l'énoncé (`24` puis `93`), plus des cas limites (roche confondue avec
   la source, sol qui bloque immédiatement la source).

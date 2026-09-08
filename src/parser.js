@@ -8,13 +8,13 @@ export function fillSegment([x1, y1], [x2, y2]) {
   const points = [];
 
   if (x1 === x2) {
-    // segment vertical
+    // ici on a le segment vertical
     const [yStart, yEnd] = y1 <= y2 ? [y1, y2] : [y2, y1];
     for (let y = yStart; y <= yEnd; y++) {
       points.push([x1, y]);
     }
   } else if (y1 === y2) {
-    // segment horizontal
+    // ici on a le segment horizontal
     const [xStart, xEnd] = x1 <= x2 ? [x1, x2] : [x2, x1];
     for (let x = xStart; x <= xEnd; x++) {
       points.push([x, y1]);
