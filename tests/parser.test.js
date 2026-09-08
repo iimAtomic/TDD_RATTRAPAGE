@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseCoordinate } from '../src/parser.js';
-import { parseCoordinate, fillSegment } from '../src/parser.js';
+import { parseCoordinate, fillSegment, parseLine, parseInput } from '../src/parser.js';
 
 describe('parser', () => {
   it('transforme un coordonnée', () => {
@@ -44,4 +43,14 @@ it('traite plusieurs segments', () => {
     [497, 6],
     [496, 6],
   ]);
+});
+
+it('construit le Set de roches depuis le fichier', () => {
+  const input = '498,4 -> 498,6 -> 496,6\n503,4 -> 502,4 -> 502,9 -> 494,9';
+  const roches = parseInput(input);
+
+  expect(roches.has('498,4')).toBe(true);
+  expect(roches.has('496,6')).toBe(true);
+  expect(roches.has('502,9')).toBe(true);
+  expect(roches.has('0,0')).toBe(false);
 });
